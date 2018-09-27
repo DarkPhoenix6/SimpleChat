@@ -31,7 +31,7 @@
 			</main>
 		</div>
 		<footer class="foot">
-			<p class="footer-text">This site is an example of a small <a href="https://laravel.com">Laravel</a> application.<br><span class="anticopy">&copy;</span> Matthew Fritter, 2018</p>
+			<p class="footer-text">This site is an example of a small <a href="https://laravel.com">Laravel</a> application.<br><span class="anticopy">&copy;</span> Matthew Fritter, 2018<br>Modified by Chris Fedun</p>
 		</footer>
 		
 		<!-- Bootstrap JS -->
