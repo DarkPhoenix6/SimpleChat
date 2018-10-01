@@ -11,6 +11,9 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<!-- Styling -->
 		<link rel="stylesheet" href="/css/style.css">
+@if ($errors->any())
+    <link rel="stylesheet" href="/css/error.css">
+@endif
 		@yield('pageCSS')
 	</head>
 	

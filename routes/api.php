@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 /*
@@ -27,3 +28,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('send', 'ChatController@send');
 Route::get('msgs/{room}/{id}', 'ChatController@getMessages');
+Route::post('setUser', 'ChatController@setUser');
+
+Route::get('getAll', function () { return DB::table('chat')->get()->toJson(); });
+Route::get('getUser/{user}', function ($user) { return DB::table('chat')->select('message')->where('message', 'like', '%' . $user . '%')->get()->toJson(); });
+Route::get('getRooms', function () { return DB::table('chatRoom')->select('name' )->get()->toJson();  });

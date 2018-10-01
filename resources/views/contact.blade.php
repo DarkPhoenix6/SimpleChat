@@ -8,7 +8,7 @@
 @section('content')
 <div class="jumbotron">
 	<h1 class="display-4 jumbo-title">No Frills</h1>
-	<p class="lead">SimpleChat lets you create a temporary anonymous chat room with a single click. Want to chat with friends? Just send them a link.</p>
+	<p class="lead">SimpleChat lets you create a temporary anonymous chat room with a single click.</p>
 	
 </div>
 @stop

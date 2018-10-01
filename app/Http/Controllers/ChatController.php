@@ -12,7 +12,7 @@ class ChatController extends Controller
     {
 	    if ($request->has('roomName'))
     	{
-      	$name = $request['roomName'];
+      	$name = $request->validate(['roomName' => 'required|max:127|unique:chatRoom,name']);
       	$hash = md5( $name . time());
       	DB::table('chatroom')->insert(['name' => $name, 'hash' => $hash]);
        return redirect('/chat/' . $hash);
@@ -22,11 +22,27 @@ class ChatController extends Controller
     public function join ($room)
     {
       $roomData = DB::table('chatroom')->where('hash', '=', $room)->first();
-      $names = array("Darth Vader", "Captian Kirk", "Captian Picard", "Scotty", "Bones", "Luke", "Ray");
-      $user = $names[array_rand($names)];
+      
+      if (session()->has('user'))
+      {
+        $user = session('user');
+      } else
+      {
+        $names = array("Darth Vader", "Captian Kirk", "Captian Picard", "Scotty", "Bones", "Luke", "Ray");
+        $user = $names[array_rand($names)];
+        session()->put('user', '' . $user);
+      }
+      
+      
+      if (session()->has('color'))
+      {
+        $colour = session('color');
+      } else
+      {
       $colours = array("Blue", "Cyan", "Red", "DarkCyan", "DarkViolet", "BlueViolet", "Fuchsia", "RebeccaPurple", "Purple" );
       $colour = $colours[array_rand($colours)];
-      
+      session()->put('color', '' . $colour);
+      }
       $name = $roomData->name;
       $hash = $room;
       
@@ -57,5 +73,15 @@ class ChatController extends Controller
        $jsonArray = json_encode($array, JSON_UNESCAPED_SLASHES);
        
        return $jsonArray;
+    }
+    
+    public function setUser (Request $request)
+    {
+      $user = htmlspecialchars($request->validate('user', 'required|max:127|alphanum'));
+      $color = htmlspecialchars($request->validate('color', 'required|max:127|alphanum'));
+      
+      session()->put('user', '' . $user);
+      session()->put('color', '' . $color);
+      
     }
 }
