@@ -1,10 +1,19 @@
 
 #userName {
-  
+  border-radius: .25rem;
 }
 
+#userColor {
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: 0.25rem;
+}
 div.input-group label {
   height: calc(2.25rem + 2px);
   padding-top: 6px;
   margin-bottom: 0;
+  padding-right: 6px;
+}
+
+div.input-group label:nth-of-type(2) {
+  padding-left: 6px; 
 }

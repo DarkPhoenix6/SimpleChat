@@ -12,7 +12,8 @@ class ChatController extends Controller
     {
 	    if ($request->has('roomName'))
     	{
-      	$name = $request->validate(['roomName' => 'required|max:127|unique:chatRoom,name']);
+      	$data = $request->validate(['roomName' => 'required|max:127|unique:chatRoom,name']);
+         $name = $data['roomName'];
       	$hash = md5( $name . time());
       	DB::table('chatroom')->insert(['name' => $name, 'hash' => $hash]);
        return redirect('/chat/' . $hash);
@@ -25,28 +26,26 @@ class ChatController extends Controller
       
       if (session()->has('user'))
       {
-        $user = session('user');
+        $user = session()->get('user');
+        $colour = session()->get('color');
       } else
       {
         $names = array("Darth Vader", "Captian Kirk", "Captian Picard", "Scotty", "Bones", "Luke", "Ray");
         $user = $names[array_rand($names)];
         session()->put('user', '' . $user);
-      }
-      
-      
-      if (session()->has('color'))
-      {
-        $colour = session('color');
-      } else
-      {
-      $colours = array("Blue", "Cyan", "Red", "DarkCyan", "DarkViolet", "BlueViolet", "Fuchsia", "RebeccaPurple", "Purple" );
+        $colours = array("Blue", "Cyan", "Red", "DarkCyan", "DarkViolet", "BlueViolet", "Fuchsia", "RebeccaPurple", "Purple" );
       $colour = $colours[array_rand($colours)];
       session()->put('color', '' . $colour);
       }
+      
+      
+      
+      
+      
       $name = $roomData->name;
       $hash = $room;
       
-      $chat = array($name, $hash, $user, $colour);
+      
       return view('chat', ['name' => $name, 'hash' => $hash, 'user' => $user, 'color' => $colour]);
     }
     
@@ -77,11 +76,15 @@ class ChatController extends Controller
     
     public function setUser (Request $request)
     {
-      $user = htmlspecialchars($request->validate('user', 'required|max:127|alphanum'));
-      $color = htmlspecialchars($request->validate('color', 'required|max:127|alphanum'));
+      $user_data = $request->validate(['user'=> 'required|max:127|alphanum','color'=> 'required|max:127|alphanum']);
       
+      $user = $user_data['user'];
+      $color = $user_data['color'];
+      session()->forget('user');
+      session()->forget('color');
       session()->put('user', '' . $user);
       session()->put('color', '' . $color);
-      
+      //dd(session()->all());
+      return session('user');
     }
 }

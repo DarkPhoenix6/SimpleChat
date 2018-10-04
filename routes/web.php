@@ -37,3 +37,4 @@ Route::get('contact', function () {
 Route::post('create', 'ChatController@create');
 Route::get('chat/{id}', 'ChatController@join');
 
+Route::post('setUser', 'ChatController@setUser');
