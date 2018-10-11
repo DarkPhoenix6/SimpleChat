@@ -30,13 +30,18 @@ class ChatController extends Controller
         $colour = session()->get('color');
       } else
       {
-        $names = array("Darth Vader", "Captian Kirk", "Captian Picard", "Scotty", "Bones", "Luke", "Ray");
+        $names = array("Darth Vader", "Captian Kirk", "Captian Picard", "Scotty", "Bones", "Luke", "Ray", "Han Solo");
         $user = $names[array_rand($names)];
         session()->put('user', '' . $user);
         $colours = array("Blue", "Cyan", "Red", "DarkCyan", "DarkViolet", "BlueViolet", "Fuchsia", "RebeccaPurple", "Purple" );
       $colour = $colours[array_rand($colours)];
       session()->put('color', '' . $colour);
       }
+      if (session()->has('chatHash'))
+      {
+        session()->forget('chatHash');
+      }
+      
       
       
       
@@ -45,7 +50,7 @@ class ChatController extends Controller
       $name = $roomData->name;
       $hash = $room;
       
-      
+      session()->put('chatHash', $hash);
       return view('chat', ['name' => $name, 'hash' => $hash, 'user' => $user, 'color' => $colour]);
     }
     
@@ -86,5 +91,30 @@ class ChatController extends Controller
       session()->put('color', '' . $color);
       //dd(session()->all());
       return session('user');
+    }
+    
+    public function getSessionHash()
+    {
+      return session()->get('roomHash', 'NONE');
+      #if it returns 'NONE', something really bad happened. check on client side
+    }
+    
+    public function getSessionUser()
+    {
+      return session()->get('user', 'Bones');
+    }
+    
+    public function getSessionColor()
+    {
+      return session()->get('color', 'Red');
+    }
+    public function getSessionData()
+    {
+      $arr = array();
+      $arr['user'] = session()->get('user', 'Bones');
+      $arr['color'] = session()->get('color', 'Red');
+      $arr['hash'] = session()->get('roomHash', 'NONE');
+      $jsonArray = json_encode($arr, JSON_UNESCAPED_SLASHES);
+      return $jsonArray;
     }
 }

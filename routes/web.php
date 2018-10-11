@@ -38,3 +38,8 @@ Route::post('create', 'ChatController@create');
 Route::get('chat/{id}', 'ChatController@join');
 
 Route::post('setUser', 'ChatController@setUser');
+
+Route::get('getSessionHash', 'ChatController@getSessionHash');
+Route::get('getSessionUser', 'ChatController@getSessionUser');
+Route::get('getSessionColor', 'ChatController@getSessionColor');
+Route::get('getSessionData', 'ChatController@getSessionData');
