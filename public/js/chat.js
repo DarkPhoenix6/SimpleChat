@@ -52,7 +52,7 @@
   var sessionAjax = new XMLHttpRequest();
   sessionAjax.open("GET", "/getSessionData/", true);
   sessionAjax.onload = function(e){
-   console.log("test");
+  // console.log("test");
 	  if (sessionAjax.readyState === 4 && sessionAjax.status === 200)
 	  {
 		var json = this.responseText;

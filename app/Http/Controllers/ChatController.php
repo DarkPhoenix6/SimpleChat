@@ -60,7 +60,8 @@ class ChatController extends Controller
       $color = htmlspecialchars($request->input('color'));
       $message = htmlspecialchars($request->input('message'));
       $hash = htmlspecialchars($request->input('hash'));
-      
+      $data = $request->validate(['hash' => 'required|max:127|exists:chatRoom,hash']);
+      $hash = $data['hash'];      
       $html = '<p><span style="color: ' . $color . ';">' . $user . '</span>: ' . $message . '</p>';
       DB::table('chat')->insert(['room' => $hash, 'message' => $html, 'timestamp' => time()]);
     }
