@@ -66,7 +66,7 @@
 			{
 				color = value;
 			}
-			if (key == "hash")
+			if (key == "chatHash")
 			{
 				hash = value;
 			}

@@ -113,7 +113,7 @@ class ChatController extends Controller
       $arr = array();
       $arr['user'] = session()->get('user', 'Bones');
       $arr['color'] = session()->get('color', 'Red');
-      $arr['hash'] = session()->get('roomHash', 'NONE');
+      $arr['hash'] = session()->get('chatHash', 'NONE');
       $jsonArray = json_encode($arr, JSON_UNESCAPED_SLASHES);
       return $jsonArray;
     }
